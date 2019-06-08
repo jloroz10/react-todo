@@ -1,9 +1,7 @@
 import React from 'react';
-
+import TodoForm from './components/TodoForm.js';
 import ListElements from './components/ListElements.js';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 
 import Grid from '@material-ui/core/Grid';
 
@@ -47,11 +45,11 @@ class App extends React.Component {
         todos:[...this.state.todos,{value:this.state.value, completed:false}],
         value:''
       })
-      console.log(this.state);
+   
     }
   }
   deleteTodo = (index)=>{
-    console.log("click" + index);
+    // console.log("click" + index);
     this.setState({
       todos:this.state.todos.filter((_,i)=> i !== index)
     });
@@ -60,6 +58,7 @@ class App extends React.Component {
   markCompleted = (index) =>{
     const todos = this.state.todos;
     todos[index].completed = !todos[index].completed; 
+    // otra forma de actulizar un elemento
     this.setState({ todos });
     
   }
@@ -79,24 +78,19 @@ class App extends React.Component {
         
             <Grid container justify="center">
               <Grid item>
-                <form onSubmit={ e =>{
-                        e.preventDefault();
-                        this.saveTodo();
-                  }
-                }>
-                <TextField type="text"
-                          placeholder="Add to-do"
-                          margin="normal"
-                          onChange={this.updateValue}
-                          value={this.state.value}/>
-                </form>
+                  <TodoForm saveTodo={this.saveTodo} 
+                            updateValue={this.updateValue}
+                            value={this.state.value}
+                            />
                 
               </Grid>
             </Grid>
 
             <Grid container justify="center">
               <Grid item md={8}>
-                  <ListElements markAsCompleted={this.markCompleted} deleteToDo={this.deleteTodo} todos={this.state.todos}/>
+                  <ListElements markAsCompleted={this.markCompleted} 
+                                deleteToDo={this.deleteTodo} 
+                                todos={this.state.todos}/>
               </Grid>
             </Grid>
 
